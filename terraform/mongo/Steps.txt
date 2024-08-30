@@ -1,0 +1,14 @@
+SET MONGODB_ATLAS_PUBLIC_KEY="mzjrgith"
+SET MONGODB_ATLAS_PRIVATE_KEY="b370f1f5-e603-4f0d-9241-47c90477d8a1"
+
+terraform init
+terraform plan -out output
+terraform apply "output"
+
+
+D:\Downloads_windows\mongosh-2.0.0-win32-x64\mongosh-2.0.0-win32-x64\bin> .\mongosh.exe "mongodb+srv://techchallengecluster.aamvo.mongodb.net/" --apiVersion 1 --username fiapdbuser
+
+
+"mongodb+srv://user:password@cluster.example.mongodb.net/
+
+"mongodb+srv://fiapdbuser:fiapdbuser@techchallengecluster.aamvo.mongodb.net/"
