@@ -1,4 +1,4 @@
 provider "mongodbatlas" {
-  public_key  = var.public_key
-  private_key = var.private_key
+  public_key  = var.MONGO_DB_PUBLIC_KEY
+  private_key = var.MONGO_DB_PRIVATE_KEY
 }
