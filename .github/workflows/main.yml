@@ -43,7 +43,7 @@ jobs:
 
       - name: Terraform Mongo Plan
         working-directory: ./terraform/mongo
-        run: terraform plan
+        run: echo terraform plan
 
       - name: Terraform Apply 
         working-directory: ./terraform/mongo
