@@ -49,7 +49,6 @@ jobs:
           path: ./
           
       - name: Terraform apply
-        run: cd terraform/mongo/ 
-            terraform apply "terraform.plan" -auto-approve 
+        run: terraform apply "terraform.plan" -auto-approve 
         
         
