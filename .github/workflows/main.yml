@@ -49,5 +49,5 @@ jobs:
           MONGO_DB_PRIVATE_KEY: ${{ secrets.MONGO_DB_PRIVATE_KEY }}
           MONGO_DB_USER: ${{ secrets.MONGO_DB_USER }}
           MONGO_DB_PASSWORD: ${{ secrets.MONGO_DB_PASSWORD }}
-        run: terraform apply --auto-approve
+        run: terraform apply --auto-approve -var=MONGO_DB_ORG_ID=${{ secrets.MONGO_DB_ORG_ID }}
       
