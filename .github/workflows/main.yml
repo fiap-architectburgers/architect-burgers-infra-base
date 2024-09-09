@@ -33,7 +33,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: terraform-plan
-          path: terraform.plan
+          path: ./terraform/mongo/terraform.plan
 
       #- name: Terraform Apply 
         #working-directory: ./terraform/mongo
