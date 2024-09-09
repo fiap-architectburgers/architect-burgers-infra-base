@@ -37,7 +37,6 @@ jobs:
 
       - name: Terraform Secrets
       - uses: actions/setup-terraform@v2
-      - name: Use secret
         env:
           MONGO_DB_ORG_ID: ${{ secrets.MONGO_DB_ORG_ID }}
           MONGO_DB_PUBLIC_KEY: ${{ secrets.MONGO_DB_PUBLIC_KEY }}
