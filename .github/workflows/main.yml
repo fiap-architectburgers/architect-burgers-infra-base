@@ -49,6 +49,6 @@ jobs:
           path: ./
           
       - name: Terraform apply
-        run: terraform apply terraform.plan -auto-approve 
+        run: terraform apply -auto-approve 
         
         
