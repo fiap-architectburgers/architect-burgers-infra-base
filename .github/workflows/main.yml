@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI-Infra-Base
+name: IaC Mongo DB
 
 # Controls when the workflow will run
 on:
@@ -10,32 +10,16 @@ on:
     paths: ["terraform/**"]
   pull_request:
     branches: [ "main" ]
-
-  # Allows you to run this workflow manually from the Actions tab
+    paths: ["terraform/**"]
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   terraform:
     name: "Terraform DBs apply"
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
         uses: actions/checkout@v4
-
-     # - name: Terraform Secrets
-     #   uses: hashicorp/setup-terraform@v2.0.3
-     #  env:
-     #     MONGO_DB_ORG_ID: ${{ secrets.MONGO_DB_ORG_ID }}
-     #     MONGO_DB_PUBLIC_KEY: ${{ secrets.MONGO_DB_PUBLIC_KEY }}
-     #    MONGO_DB_PRIVATE_KEY: ${{ secrets.MONGO_DB_PRIVATE_KEY }}
-     #     MONGO_DB_USER: ${{ secrets.MONGO_DB_USER }}
-     #     MONGO_DB_PASSWORD: ${{ secrets.MONGO_DB_PASSWORD }}
       
       - name: Terraform Mongo init
         working-directory: ./terraform/mongo
