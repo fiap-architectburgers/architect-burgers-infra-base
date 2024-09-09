@@ -26,9 +26,16 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
-      - uses: actions/checkout@v4
+        uses: actions/checkout@v4
 
-
+      - name: Terraform Secrets
+        uses: actions/setup-terraform@v2
+        env:
+          MONGO_DB_ORG_ID: ${{ secrets.MONGO_DB_ORG_ID }}
+          MONGO_DB_PUBLIC_KEY: ${{ secrets.MONGO_DB_PUBLIC_KEY }}
+          MONGO_DB_PRIVATE_KEY: ${{ secrets.MONGO_DB_PRIVATE_KEY }}
+          MONGO_DB_USER: ${{ secrets.MONGO_DB_USER }}
+          MONGO_DB_PASSWORD: ${{ secrets.MONGO_DB_PASSWORD }}
       
       - name: Terraform Mongo init
         working-directory: ./terraform/mongo
