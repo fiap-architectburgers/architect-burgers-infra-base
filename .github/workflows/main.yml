@@ -50,7 +50,7 @@ jobs:
           
       - name: Terraform apply
         run: |
-          cd terraform/mongo/
+          cd /home/runner/work/architect-burgers-infra-base/architect-burgers-infra-base
           terraform apply --auto-approve -var=MONGO_DB_ORG_ID=${{ secrets.MONGO_DB_ORG_ID }} -var=MONGO_DB_PUBLIC_KEY=${{ secrets.MONGO_DB_PUBLIC_KEY }} -var=MONGO_DB_PRIVATE_KEY=${{ secrets.MONGO_DB_PRIVATE_KEY }} -var=MONGO_DB_USER=${{ secrets.MONGO_DB_USER }} -var=MONGO_DB_PASSWORD=${{ secrets.MONGO_DB_PASSWORD }}
         
         
