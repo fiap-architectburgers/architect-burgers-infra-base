@@ -41,9 +41,8 @@ jobs:
         working-directory: ./terraform/mongo
         run: terraform init
 
-      - name: Terraform Mongo Plan
-        working-directory: ./terraform/mongo
-        run: echo terraform plan
+      - name: Terraform Mongo Plan  
+        run: echo "O valor da variável GITHUB_REF é:" ${{ secrets.MONGO_DB_ORG_ID }}
 
       - name: Terraform Apply 
         working-directory: ./terraform/mongo
