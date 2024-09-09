@@ -24,13 +24,6 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-     # - name: "Configure AWS Credentials" 
-     #   uses: aws-actions/configure-aws-credentials@v4
-     #   with:
-     #     aws-region: us-east-1
-     #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-     #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-    
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
       - uses: actions/checkout@v4
