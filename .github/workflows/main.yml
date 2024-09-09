@@ -30,7 +30,7 @@ jobs:
         run: terraform plan -out=terraform.plan -var=MONGO_DB_ORG_ID=${{ secrets.MONGO_DB_ORG_ID }} -var=MONGO_DB_PUBLIC_KEY=${{ secrets.MONGO_DB_PUBLIC_KEY }} -var=MONGO_DB_PRIVATE_KEY=${{ secrets.MONGO_DB_PRIVATE_KEY }} -var=MONGO_DB_USER=${{ secrets.MONGO_DB_USER }} -var=MONGO_DB_PASSWORD=${{ secrets.MONGO_DB_PASSWORD }}
         
       - name: Upload Terraform plan
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: terraform-plan
           path: ./terraform/mongo/terraform.plan
@@ -40,10 +40,10 @@ jobs:
         #run: terraform apply --auto-approve -var=MONGO_DB_ORG_ID=${{ secrets.MONGO_DB_ORG_ID }} -var=MONGO_DB_PUBLIC_KEY=${{ secrets.MONGO_DB_PUBLIC_KEY }} -var=MONGO_DB_PRIVATE_KEY=${{ secrets.MONGO_DB_PRIVATE_KEY }} -var=MONGO_DB_USER=${{ secrets.MONGO_DB_USER }} -var=MONGO_DB_PASSWORD=${{ secrets.MONGO_DB_PASSWORD }}
 
       - name: Terraform Checkout 
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         
       - name: Download Terraform plan
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: terraform-plan
           path: ./
