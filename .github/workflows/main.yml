@@ -37,11 +37,11 @@ jobs:
          # MONGO_DB_USER: ${{ secrets.MONGO_DB_USER }}
          # MONGO_DB_PASSWORD: ${{ secrets.MONGO_DB_PASSWORD }}
 
-          MONGO_DB_ORG_ID: "66c628510c7c497cf45b03ce"
-          MONGO_DB_PUBLIC_KEY: "mzjrgith"
-          MONGO_DB_PRIVATE_KEY: "b370f1f5-e603-4f0d-9241-47c90477d8a1"
-          MONGO_DB_USER: "fiapdbuser"
-          MONGO_DB_PASSWORD: "fiapdbuser"
+          MONGO_DB_ORG_ID: 66c628510c7c497cf45b03ce
+          MONGO_DB_PUBLIC_KEY: mzjrgith
+          MONGO_DB_PRIVATE_KEY: b370f1f5-e603-4f0d-9241-47c90477d8a1
+          MONGO_DB_USER: fiapdbuser
+          MONGO_DB_PASSWORD: fiapdbuser
       
       - name: Terraform Mongo init
         working-directory: ./terraform/mongo
