@@ -49,6 +49,8 @@ jobs:
           path: ./
           
       - name: Terraform apply
-        run: terraform apply -auto-approve 
+        run: |
+          cd terraform/mongo/
+          terraform apply -auto-approve 
         
         
