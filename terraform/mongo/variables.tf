@@ -1,12 +1,12 @@
-variable "public_key" {
+variable "MONGO_DB_PUBLIC_KEY" {
   type        = string
   description = "Public Programmatic API key to authenticate to Atlas"
 }
-variable "private_key" {
+variable "MONGO_DB_PRIVATE_KEY" {
   type        = string
   description = "Private Programmatic API key to authenticate to Atlas"
 }
-variable "org_id" {
+variable "MONGO_DB_ORG_ID" {
   type        = string
   description = "MongoDB Organization ID"
 }
@@ -26,11 +26,11 @@ variable "region" {
   type        = string
   description = "MongoDB Atlas Cluster Region, must be a region for the provider given"
 }
-variable "dbuser" {
+variable "MONGO_DB_USER" {
   type        = string
   description = "MongoDB Atlas Database User Name"
 }
-variable "dbuser_password" {
+variable "MONGO_DB_PASSWORD" {
   type        = string
   description = "MongoDB Atlas Database User Password"
 }

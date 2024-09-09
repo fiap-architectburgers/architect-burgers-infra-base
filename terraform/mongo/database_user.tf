@@ -1,6 +1,6 @@
 resource "mongodbatlas_database_user" "user" {
-  username           = var.dbuser
-  password           = var.dbuser_password
+  username           = var.MONGO_DB_USER
+  password           = var.MONGO_DB_PASSWORD
   project_id         = mongodbatlas_project.project.id
   auth_database_name = "admin"
 
