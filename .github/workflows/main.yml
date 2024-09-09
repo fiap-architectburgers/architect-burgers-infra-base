@@ -41,6 +41,10 @@ jobs:
         working-directory: ./terraform/mongo
         run: terraform init
 
+      - name: Terraform Mongo Plan
+        working-directory: ./terraform/mongo
+        run: terraform plan
+
       - name: Terraform Apply 
         working-directory: ./terraform/mongo
         run: terraform apply --auto-approve
