@@ -29,7 +29,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Terraform Secrets
-        uses: actions/setup-terraform@v2
+        uses: hashicorp/setup-terraform@v2.0.3
         env:
           MONGO_DB_ORG_ID: ${{ secrets.MONGO_DB_ORG_ID }}
           MONGO_DB_PUBLIC_KEY: ${{ secrets.MONGO_DB_PUBLIC_KEY }}
