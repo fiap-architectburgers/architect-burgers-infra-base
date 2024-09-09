@@ -26,6 +26,7 @@ jobs:
         run: terraform init
 
       - name: Terraform plan
+        working-directory: ./terraform/mongo
         run: terraform plan -out=terraform.plan -var=MONGO_DB_ORG_ID=${{ secrets.MONGO_DB_ORG_ID }} -var=MONGO_DB_PUBLIC_KEY=${{ secrets.MONGO_DB_PUBLIC_KEY }} -var=MONGO_DB_PRIVATE_KEY=${{ secrets.MONGO_DB_PRIVATE_KEY }} -var=MONGO_DB_USER=${{ secrets.MONGO_DB_USER }} -var=MONGO_DB_PASSWORD=${{ secrets.MONGO_DB_PASSWORD }}
         
       - name: Upload Terraform plan
