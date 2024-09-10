@@ -29,9 +29,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       
-      - name: Terraform init
-        working-directory: ./terraform/mongo
-        run: terraform init -backend-config="bucket=${{ secrets.AWS_BUCKET_NAME }}" -backend-config="key=${{ secrets.AWS_BUCKET_FILE }}"
+      #- name: Terraform init
+      #  working-directory: ./terraform/mongo
+       # run: terraform init -backend-config="bucket=${{ secrets.AWS_BUCKET_NAME }}" -backend-config="key=${{ secrets.AWS_BUCKET_FILE }}"
+
+      - name: Terraform Init
+        run: |
+          cd terraform/mongo && terraform init \
+            -backend-config="bucket=${{ secrets.AWS_BUCKET_NAME }}" \
+            -backend-config="key=${{ secrets.AWS_BUCKET_FILE }}" \
+            -backend-config="region=us-east-1" \
+            -backend-config="dynamodb_table=tabelaDyn"
 
       - name: Terraform Apply 
         working-directory: ./terraform/mongo
