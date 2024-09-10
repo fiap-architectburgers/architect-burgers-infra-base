@@ -93,11 +93,3 @@ resource "aws_db_instance" "burgers_db" {
 
   multi_az = true
 }
-
-resource "aws_s3_bucket" "bucket-terraforms" {
-  bucket = "bucket-terraforms"
-
-  tags = {
-    Name        = "bucket-terraforms"
-  }
-}
