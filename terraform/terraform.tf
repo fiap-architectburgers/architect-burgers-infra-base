@@ -15,7 +15,9 @@ terraform {
       version = "~> 2.3.4"
     }
   }
+  backend "s3" {
 
+  }
   required_version = "~> 1.3"
 }
 
