@@ -36,7 +36,7 @@ jobs:
         run: aws dynamodb create-table --table-name terraform-locks --attribute-definitions AttributeName=LockID,AttributeType=S --key-schema AttributeName=LockID,KeyType=HASH --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5
 
       - name: Verify S3 Bucket
-        run: aws s3 ls s3://${{ secrets.AWS_BUCKET_NAME }}
+        run: aws s3api head-bucket --bucket ${{ secrets.AWS_BUCKET_NAME }}
         id: head_bucket
         
       - name: Create S3 Bucket
