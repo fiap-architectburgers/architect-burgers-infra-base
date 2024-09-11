@@ -1,7 +1,7 @@
 name: AWS Pre Requirements
 
 on:
-  workflow_call:
+  #workflow_call:
   push:
     branches: [ "main" ]
     paths: ["terraform/**"]
