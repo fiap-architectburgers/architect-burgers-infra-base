@@ -19,11 +19,12 @@ jobs:
   #  uses: fiap-architectburgers/architect-burgers-infra-base/.github/workflows/aws-pre-requirements.yml@github-alancarvalho-patch-2
   call-workflow-aws-pre-requirements:
     uses: ./.github/workflows/aws-pre-requirements.yml
-    secrets:
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
-      AWS_BUCKET_NAME: ${{ secrets.AWS_BUCKET_NAME }}
+    secrets: inherit
+    #secrets:
+      #AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+      #AWS_BUCKET_NAME: ${{ secrets.AWS_BUCKET_NAME }}
    
   create-mongo-database:
     #needs: pre-reqs-terraform-aws
