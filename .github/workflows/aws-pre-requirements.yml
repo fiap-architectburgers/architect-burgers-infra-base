@@ -34,17 +34,11 @@ jobs:
       #- name: Verify DynamoDB Table
       #  run: aws dynamodb describe-table --table-name ${{ inputs.AWS_TABLE_NAME }}
       #  id: describe_table
-      - name: Verify DynamoDB Table
-        run: |
-          aws dynamodb describe-table --table-name ${{ inputs.AWS_TABLE_NAME }}
-          if [ $? -ne 0 ]; then
-            echo "Tabela não encontrada. Criando..."
-            aws dynamodb create-table --table-name ${{ inputs.AWS_TABLE_NAME }} --attribute-definitions AttributeName=LockID,AttributeType=S --key-schema AttributeName=LockID,KeyType=HASH --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5
-
-
-      #- name: Create Dynamodb table
+      
+      - name: Create Dynamodb table
       #  if: steps.describe_table.outputs.exit-code == 1
-      #  run: aws dynamodb create-table --table-name ${{ inputs.AWS_TABLE_NAME }} --attribute-definitions AttributeName=LockID,AttributeType=S --key-schema AttributeName=LockID,KeyType=HASH --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5
+        run: aws dynamodb create-table --table-name ${{ inputs.AWS_TABLE_NAME }} --attribute-definitions AttributeName=LockID,AttributeType=S --key-schema AttributeName=LockID,KeyType=HASH --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5
+        continue-on-error: true
         
       - name: Create S3 Bucket
         run: aws s3 mb s3://${{ inputs.AWS_BUCKET_NAME }}
