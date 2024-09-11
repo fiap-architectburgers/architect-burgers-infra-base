@@ -40,7 +40,7 @@ jobs:
         id: head_bucket
         
       - name: Create S3 Bucket
-        if: steps.head_bucket.outputs.exit-code == 1
+        if: steps.head_bucket.outputs.exit-code == 404
         run: aws s3 mb s3://${{ secrets.AWS_BUCKET_NAME }}
           
       - name: Checkout
