@@ -1,4 +1,4 @@
-name: IaC Mongo DB
+name: IaC RDS Postgres
 
 on:
   workflow_call: 
