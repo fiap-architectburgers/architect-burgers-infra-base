@@ -14,15 +14,13 @@ on:
     paths: ["terraform/**"]
   workflow_dispatch:
 
-jobs:
- # pre-reqs-terraform-aws: 
-  #  uses: fiap-architectburgers/architect-burgers-infra-base/.github/workflows/aws-pre-requirements.yml@github-alancarvalho-patch-2
+jobs: 
   call-workflow-aws-pre-requirements:
     uses: ./.github/workflows/aws-pre-requirements.yml
     secrets: inherit
    
   create-mongo-database:
-    #needs: pre-reqs-terraform-aws
+    needs: call-workflow-aws-pre-requirements
     name: "Create MongoDB database"
     runs-on: ubuntu-latest
     steps:
