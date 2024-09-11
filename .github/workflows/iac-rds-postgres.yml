@@ -44,7 +44,7 @@ jobs:
             -backend-config="bucket=${{ secrets.AWS_BUCKET_NAME }}" \
             -backend-config="key=${{ secrets.AWS_BUCKET_FILE }}" \
             -backend-config="region=us-east-1" \
-            -backend-config="dynamodb_table=terraform-locks"
+            -backend-config="dynamodb_table=terraform-postgres-lock"
 
       - name: Terraform Apply 
         working-directory: ./terraform
