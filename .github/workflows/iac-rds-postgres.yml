@@ -49,6 +49,6 @@ jobs:
 
       - name: Terraform Apply 
         working-directory: ./terraform
-        run: terraform apply --auto-approve -var=db_password=${{ secrets.MONGO_DB_PASSWORD }}
+        run: terraform apply --auto-approve -var=db_password=${{ secrets.POSTGRES_PASSWORD }}
 
         
