@@ -21,7 +21,7 @@ jobs:
       #AWS_SESSION_TOKEN : ${{ secrets.AWS_SESSION_TOKEN  }}
     with:
       AWS_BUCKET_NAME  : terraform-postgres
-      AWS_TABLE_NAME: terraform-postgres-lock
+      AWS_TABLE_NAME: terraform-postgres-lock1
      
   create-rds-postgres-database:
     needs: call-workflow-aws-pre-requirements
@@ -45,7 +45,7 @@ jobs:
             -backend-config="bucket=${{ secrets.AWS_BUCKET_NAME }}" \
             -backend-config="key=${{ secrets.AWS_BUCKET_FILE }}" \
             -backend-config="region=us-east-1" \
-            -backend-config="dynamodb_table=terraform-postgres-lock"
+            -backend-config="dynamodb_table=terraform-postgres-lock1"
 
       - name: Terraform Apply 
         working-directory: ./terraform
