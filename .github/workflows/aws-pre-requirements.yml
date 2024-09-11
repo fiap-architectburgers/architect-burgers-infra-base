@@ -3,8 +3,8 @@ name: AWS Pre Requirements
 on:
   #workflow_call:
   push:
-    branches: [ "main" ]
-    paths: ["terraform/**"]
+    branches: [ "github-alancarvalho-patch-2" ]
+   # paths: ["terraform/**"]
   pull_request:
     branches: [ "main" ]
     paths: ["terraform/**"]
