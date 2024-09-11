@@ -12,7 +12,7 @@ on:
 
 jobs:
   pre-reqs-terraform-aws:
-    name: "Terraform AWS RDS"
+    name: "AWS Pre Requirements"
     runs-on: ubuntu-latest
     steps:
       - name: "Configure AWS Credentials" 
