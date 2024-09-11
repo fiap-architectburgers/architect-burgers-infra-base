@@ -46,7 +46,7 @@ jobs:
     #      echo "Bucket Verification failed: ${{ steps.head_bucket.outputs.stderr }}"
         
       - name: Create S3 Bucket
-        if: steps.head_bucket.outputs.exit-code == 404
+       # if: steps.head_bucket.outputs.exit-code == 404
         run: aws s3 mb s3://${{ secrets.AWS_BUCKET_NAME }}
         continue-on-error: true
         
