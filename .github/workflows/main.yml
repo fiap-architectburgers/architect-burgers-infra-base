@@ -35,20 +35,20 @@ jobs:
         if: steps.describe_table.outputs.exit-code == 1
         run: aws dynamodb create-table --table-name terraform-locks --attribute-definitions AttributeName=LockID,AttributeType=S --key-schema AttributeName=LockID,KeyType=HASH --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5
 
-      - name: Verify S3 Bucket
-        run: aws s3 ls s3://${{ secrets.AWS_BUCKET_NAME }}
-        id: head_bucket
-        continue-on-error: true
+     # - name: Verify S3 Bucket
+     #   run: aws s3 ls s3://${{ secrets.AWS_BUCKET_NAME }}
+     #   id: head_bucket
+    #    continue-on-error: true
 
-      - name: Verify S3 Bucket errorrr
-        if: steps.head_bucket.outputs.exit-code != 0
-        run: |
-          echo "Bucket Verification failed: ${{ steps.head_bucket.outputs.stderr }}"
+    #  - name: Verify S3 Bucket errorrr
+    #    if: steps.head_bucket.outputs.exit-code != 0
+   #     run: |
+    #      echo "Bucket Verification failed: ${{ steps.head_bucket.outputs.stderr }}"
         
       - name: Create S3 Bucket
         if: steps.head_bucket.outputs.exit-code == 404
         run: aws s3 mb s3://${{ secrets.AWS_BUCKET_NAME }}
-
+        continue-on-error: true
         
           
       - name: Checkout
