@@ -14,7 +14,7 @@ on:
 
 jobs:
   pre-reqs-terraform-aws: 
-    uses: fiap-architectburgers/architect-burgers-infra-base.github/workflows/aws-pre-requirements.yml@github-alancarvalho-patch-2
+    uses: fiap-architectburgers/architect-burgers-infra-base/.github/workflows/aws-pre-requirements.yml@github-alancarvalho-patch-2
 
   create-mongo-database:
     needs: pre-reqs-terraform-aws
