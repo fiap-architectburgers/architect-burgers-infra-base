@@ -4,8 +4,9 @@ on:
   #workflow_run:
   #  workflows: ["AWS Pre Requirements"]
   push:
-    branches: [ "main" ]
-    paths: ["terraform/**"]
+    branches: [ "github-alancarvalho-patch-2" ]
+    #paths: ["terraform/**"]
+    #paths: ["terraform/**"]
   pull_request:
     branches: [ "main" ]
     paths: ["terraform/**"]
