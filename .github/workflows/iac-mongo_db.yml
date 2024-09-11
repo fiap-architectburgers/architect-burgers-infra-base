@@ -20,11 +20,6 @@ jobs:
   call-workflow-aws-pre-requirements:
     uses: ./.github/workflows/aws-pre-requirements.yml
     secrets: inherit
-    #secrets:
-      #AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
-      #AWS_BUCKET_NAME: ${{ secrets.AWS_BUCKET_NAME }}
    
   create-mongo-database:
     #needs: pre-reqs-terraform-aws
@@ -33,6 +28,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: "Configure AWS Credentials" 
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: us-east-1
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
       
       - name: Terraform Init
         run: |
