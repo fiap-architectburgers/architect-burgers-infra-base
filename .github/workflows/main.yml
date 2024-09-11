@@ -1,8 +1,8 @@
 name: IaC Mongo DB
 
 on:
-  workflow_run:
-    workflows: ["AWS Pre Requirements"]
+  #workflow_run:
+  #  workflows: ["AWS Pre Requirements"]
   push:
     branches: [ "main" ]
     paths: ["terraform/**"]
@@ -12,8 +12,11 @@ on:
   workflow_dispatch:
 
 jobs:
+  pre-reqs-terraform-aws: 
+    uses: fiap-architectburgers/architect-burgers-infra-base.github/workflows/aws-pre-requirements.yml@github-alancarvalho-patch-2
+
   create-mongo-database:
-    #needs: [aws-pre-requirements/pre-reqs-terraform-aws]
+    needs: pre-reqs-terraform-aws
     name: "Create MongoDB database"
     runs-on: ubuntu-latest
     steps:
