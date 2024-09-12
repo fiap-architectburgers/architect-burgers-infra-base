@@ -5,23 +5,14 @@ on:
   push:
     branches: [ "github-alancarvalho-patch-2" ]
     #paths: ["terraform/**"]
-    #paths: ["terraform/**"]
   pull_request:
     branches: [ "main" ]
     paths: ["terraform/**"]
   workflow_dispatch:
 
 jobs: 
-  #call-workflow-aws-pre-requirements:
-  #  uses: ./.github/workflows/aws-pre-requirements.yml
-  #  secrets: inherit
-  #  with:
-  #    AWS_BUCKET_NAME  : s3-terraform-mongodb
-  #    AWS_TABLE_NAME: terraform-mongodb-lock
-   
   validate-mongo-database:
-    #needs: call-workflow-aws-pre-requirements
-    name: "Create MongoDB database"
+    name: "Validate terraform MongoDB database - Create"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -45,8 +36,4 @@ jobs:
 
       - name: Terraform Validate 
         working-directory: ./terraform/mongo
-        run: terraform validate
-        #run: terraform apply --auto-approve -var=MONGO_DB_ORG_ID=${{ secrets.MONGO_DB_ORG_ID }} -var=MONGO_DB_PUBLIC_KEY=${{ secrets.MONGO_DB_PUBLIC_KEY }} -var=MONGO_DB_PRIVATE_KEY=${{ secrets.MONGO_DB_PRIVATE_KEY }} -var=MONGO_DB_USER=${{ secrets.MONGO_DB_USER }} -var=MONGO_DB_PASSWORD=${{ secrets.MONGO_DB_PASSWORD }}
-        #run: terraform apply --auto-approve -var=MONGO_DB_ORG_ID=${{ secrets.MONGO_DB_ORG_ID }} -var=MONGO_DB_PUBLIC_KEY=${{ secrets.MONGO_DB_PUBLIC_KEY }} -var=MONGO_DB_PRIVATE_KEY=${{ secrets.MONGO_DB_PRIVATE_KEY }} -var=MONGO_DB_USER=${{ secrets.MONGO_DB_USER }} -var=MONGO_DB_PASSWORD=${{ secrets.MONGO_DB_PASSWORD }}
-
-        
+        run: terraform validate        
