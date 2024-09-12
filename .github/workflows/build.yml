@@ -34,10 +34,11 @@ jobs:
       #  run: aws s3 ls | grep -iq "s3-terraform-mongodb"
       #  id: validate_bucket
 
-      - name: Validate DynamoDB Table e Bucket
+      - name: Validate DynamoDB Table and Bucket
         run: |
-          if (! aws dynamodb list-tables | grep -iq "terraform-mongodb-lock") || (! aws s3 ls | grep -iq "s3-terraform-mongodb"); then cd terraform && terraform init
-
+          if ! aws dynamodb list-tables | grep -iq "terraform-mongodb-lock" && ! aws s3 ls | grep -iq "s3-terraform-mongodb"; then
+          cd terraform && terraform init
+      
       #- name: Terraform Init - First Execution
       #  if: steps.validate_table.outputs.exit-code == 1 || steps.validate_bucket.outputs.exit-code == 1
       #  run: |
