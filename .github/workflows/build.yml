@@ -53,8 +53,22 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+
+      - name: Validate DynamoDB Table
+        run: aws dynamodb list-tables | grep -iq "${{ inputs.AWS_TABLE_NAME }}"
+        id: validate_table
+
+      - name: Validate S3 Bucket
+        run: aws s3 ls | grep -iq "${{ inputs.AWS_BUCKET_NAME }}"
+        id: validate_bucket
+
+      - name: Terraform Init - First Execution
+        if: steps.validate_table.outputs.exit-code == 1 || steps.validate_bucket.outputs.exit-code == 1
+        run: |
+          cd terraform && terraform init
       
       - name: Terraform Init
+        if: steps.validate_table.outputs.exit-code == 0
         run: |
           cd terraform && terraform init \
             -backend-config="bucket=terraform-postgres" \
