@@ -33,19 +33,19 @@ jobs:
       - name: Validate DynamoDB Table and Bucket
         run: |
           if aws dynamodb list-tables | grep -iq "terraform-mongodb-lock"; then
-          echo "TABLE=Found" >> $GITHUB_OUTPUT          
+          echo "TABLE=1" >> $GITHUB_OUTPUT          
           else
-           echo "TABLE=Not Found" >> $GITHUB_OUTPUT
+           echo "TABLE=0" >> $GITHUB_OUTPUT
           fi
         id: validate_table
       
       - name: Terraform Init - First Execution
-        if: ${{ steps.validate_dyn_bucket.outputs.TABLE1 == 'Not Found'}}
+        if: steps.validate_dyn_bucket.outputs.TABLE1 == 0
         run: |
           cd terraform && terraform init -backend=false
       
       - name: Terraform Init
-        if: ${{ steps.validate_dyn_bucket.outputs.TABLE1 == 'Found'}}
+        if: steps.validate_dyn_bucket.outputs.TABLE1 == 1
         run: |
           cd terraform/mongo && terraform init \
             -backend-config="bucket=s3-terraform-mongodb" \
