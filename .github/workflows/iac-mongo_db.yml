@@ -9,7 +9,7 @@ on:
     #branches: [ "main" ]
     branches: [ "github-alancarvalho-patch-2" ]
   #  paths: ["terraform/**"]
-# # pull_request:
+## # pull_request:
 #    branches: [ "main" ]
 #    paths: ["terraform/**"]
   workflow_dispatch:
