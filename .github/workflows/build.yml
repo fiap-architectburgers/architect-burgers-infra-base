@@ -38,6 +38,7 @@ jobs:
         run: |
           if ! aws dynamodb list-tables | grep -iq "terraform-mongodb-lock"; then
           echo "result_table=nao_existe" >> $GITHUB_OUTPUT
+          echo ${{ github.output.result_table }}
           #cd terraform && terraform init
           fi
       
@@ -45,6 +46,7 @@ jobs:
       #  if: steps.validate_table.outputs.exit-code == 1 || steps.validate_bucket.outputs.exit-code == 1
         if: ${{ github.output.result_table }} == nao_existe
         run: |
+          echo ${{ github.output.result_table }}
           cd terraform && terraform init
       
       - name: Terraform Init
