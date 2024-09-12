@@ -26,18 +26,22 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
 
-      - name: Validate DynamoDB Table
-        run: aws dynamodb list-tables | grep -iq "terraform-mongodb-lock"
-        id: validate_table
+      #- name: Validate DynamoDB Table
+      #  run: aws dynamodb list-tables | grep -iq "terraform-mongodb-lock"
+      #  id: validate_table
 
-      - name: Validate S3 Bucket
-        run: aws s3 ls | grep -iq "s3-terraform-mongodb"
-        id: validate_bucket
+      #- name: Validate S3 Bucket
+      #  run: aws s3 ls | grep -iq "s3-terraform-mongodb"
+      #  id: validate_bucket
 
-      - name: Terraform Init - First Execution
-        if: steps.validate_table.outputs.exit-code == 1 || steps.validate_bucket.outputs.exit-code == 1
+      - name: Validate DynamoDB Table e Bucket
         run: |
-          cd terraform && terraform init
+          if (! aws dynamodb list-tables | grep -iq "terraform-mongodb-lock") || (! aws s3 ls | grep -iq "s3-terraform-mongodb"); then cd terraform && terraform init
+
+      #- name: Terraform Init - First Execution
+      #  if: steps.validate_table.outputs.exit-code == 1 || steps.validate_bucket.outputs.exit-code == 1
+      #  run: |
+      #    cd terraform && terraform init
       
       - name: Terraform Init
         if: steps.validate_table.outputs.exit-code == 0
