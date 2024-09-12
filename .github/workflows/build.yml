@@ -79,28 +79,43 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
 
-      - name: Validate DynamoDB Table
-        run: aws dynamodb list-tables | grep -iq "terraform-postgres-lock"
-        id: validate_table
+     # - name: Validate DynamoDB Table
+     #   run: aws dynamodb list-tables | grep -iq "terraform-postgres-lock"
+     #   id: validate_table
+
+      #- name: Validate S3 Bucket
+      #  run: aws s3 ls | grep -iq "s3-terraform-postgres"
+      #  id: validate_bucket
 
       - name: Validate S3 Bucket
-        run: aws s3 ls | grep -iq "s3-terraform-postgres"
+        run: |
+          if aws s3 ls | grep -iq "s3-terraform-postgres"; then
+          echo "BUCKET=1" >> $GITHUB_OUTPUT          
+          else
+           echo "BUCKET=0" >> $GITHUB_OUTPUT
+          fi
         id: validate_bucket
 
-      - name: Terraform Init - First Execution
-        if: steps.validate_table.outputs.exit-code == 1 || steps.validate_bucket.outputs.exit-code == 1
+      - name: Validate DynamoDB Table
         run: |
-          cd terraform && terraform init
+          if aws dynamodb list-tables | grep -iq "terraform-postgres-lock"; then
+          echo "TABLE=1" >> $GITHUB_OUTPUT          
+          else
+           echo "TABLE=0" >> $GITHUB_OUTPUT
+          fi
+        id: validate_table
+
+      - name: Terraform Init - First Execution
+        if: steps.validate_table.outputs.TABLE == 0 || steps.validate_bucket.outputs.BUCKET == 0
+        run: |
+          cd terraform && terraform init -backend=false && terraform validate 
       
       - name: Terraform Init
-        if: steps.validate_table.outputs.exit-code == 0
+        if: steps.validate_table.outputs.TABLE == 1 || steps.validate_bucket.outputs.BUCKET == 1
         run: |
           cd terraform && terraform init \
             -backend-config="bucket=terraform-postgres" \
             -backend-config="key=${{ secrets.AWS_BUCKET_FILE }}" \
             -backend-config="region=us-east-1" \
-            -backend-config="dynamodb_table=terraform-postgres-lock"
-      
-      - name: Terraform Validate 
-        working-directory: ./terraform
-        run: terraform validate  
+            -backend-config="dynamodb_table=terraform-postgres-lock" \
+            && terraform validate 
