@@ -6,12 +6,11 @@ on:
   #  workflows: ["AWS Pre Requirements"]
   
   push:
-    branches: [ "github-alancarvalho-patch-2" ]
-    #paths: ["terraform/**"]
-    #paths: ["terraform/**"]
-  pull_request:
     branches: [ "main" ]
-    paths: ["terraform/**"]
+    #paths: ["terraform/**"]
+#  pull_request:
+#    branches: [ "main" ]
+#    paths: ["terraform/**"]
   workflow_dispatch:
 
 jobs: 
