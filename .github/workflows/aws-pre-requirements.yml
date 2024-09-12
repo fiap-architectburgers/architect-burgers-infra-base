@@ -47,10 +47,11 @@ jobs:
         continue-on-error: true
 
       - name: Validate S3 Bucket
-        run: aws s3 ls | grep -i "${{ inputs.AWS_BUCKET_NAME }}"
+        run: aws s3 ls | grep -iq "${{ inputs.AWS_BUCKET_NAME }}"
         id: validate_bucket
       
       - name: Create S3 Bucket
-        if: steps.validate_bucket.outputs['time'] == ''
+        #if: steps.validate_bucket.outputs['time'] == ''
+        if: steps.validate_bucket.outputs.exit-code == 1
         run: aws s3 mb s3://${{ inputs.AWS_BUCKET_NAME }}
         continue-on-error: true
