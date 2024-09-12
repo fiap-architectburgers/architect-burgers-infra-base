@@ -36,7 +36,7 @@ jobs:
 
       - name: Validate DynamoDB Table and Bucket
         run: |
-          if ! aws dynamodb list-tables | grep -iq "terraform-mongodb-lock" && ! aws s3 ls | grep -iq "s3-terraform-mongodb"; then
+          if ! aws dynamodb list-tables | grep -iq "terraform-mongodb-lock"; then
           cd terraform && terraform init
       
       #- name: Terraform Init - First Execution
