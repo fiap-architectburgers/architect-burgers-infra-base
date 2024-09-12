@@ -42,7 +42,7 @@ jobs:
       - name: Terraform Init - First Execution
         if: ${{ steps.validate_dyn_bucket.outputs.TABLE1 }} == Not Found
         run: |
-          cd terraform && terraform init
+          cd terraform && terraform init -backend=false
       
       - name: Terraform Init
         if: ${{ steps.validate_dyn_bucket.outputs.TABLE1 }} == Found
