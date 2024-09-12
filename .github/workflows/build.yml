@@ -37,3 +37,31 @@ jobs:
       - name: Terraform Validate 
         working-directory: ./terraform/mongo
         run: terraform validate        
+
+
+  validate-rds-postgres-database:
+    name: "Validate RDS Postgres database - Create"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: "Configure AWS Credentials" 
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: us-east-1
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+      
+      - name: Terraform Init
+        run: |
+          cd terraform && terraform init \
+            -backend-config="bucket=terraform-postgres" \
+            -backend-config="key=${{ secrets.AWS_BUCKET_FILE }}" \
+            -backend-config="region=us-east-1" \
+            -backend-config="dynamodb_table=terraform-postgres-lock"
+      
+      - name: Terraform Validate 
+        working-directory: ./terraform
+        run: terraform validate  
