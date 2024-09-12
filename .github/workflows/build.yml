@@ -40,15 +40,15 @@ jobs:
         id: validate_table
       
       - name: Terraform Validation- First Execution
-        if: steps.validate_table.outputs.TABLE1 == 0
+        if: steps.validate_table.outputs.TABLE == 0
         run: |
-          echo ${{ steps.validate_table.outputs.TABLE1 }}
+          echo ${{ steps.validate_table.outputs.TABLE }}
           cd terraform && terraform init -backend=false && terraform validate 
       
       - name: Terraform Init
-        if: steps.validate_table.outputs.TABLE1 == 1
+        if: steps.validate_table.outputs.TABLE == 1
         run: |
-          echo ${{ steps.validate_table.outputs.TABLE1 }}
+          echo ${{ steps.validate_table.outputs.TABLE }}
           cd terraform/mongo && terraform init \
             -backend-config="bucket=s3-terraform-mongodb" \
             -backend-config="key=${{ secrets.AWS_BUCKET_FILE }}" \
