@@ -10,7 +10,7 @@ on:
         required: true
         type: string
   push:
-    branches: [ "main" ]
+    branches: [ "github-alancarvalho-patch-2" ]
    # paths: ["terraform/**"]
   #pull_request:
   #  branches: [ "main" ]
@@ -34,12 +34,24 @@ jobs:
       #- name: Verify DynamoDB Table
       #  run: aws dynamodb describe-table --table-name ${{ inputs.AWS_TABLE_NAME }}
       #  id: describe_table
+
+
+      - name: Validate DynamoDB Table
+        run: aws dynamodb list-tables | grep -i "${{ inputs.AWS_TABLE_NAME }}"
+        id: validate_table
+
       
       - name: Create Dynamodb table
       #  if: steps.describe_table.outputs.exit-code == 1
+        if: steps.validate_table.outputs['time'] == ''
         run: aws dynamodb create-table --table-name ${{ inputs.AWS_TABLE_NAME }} --attribute-definitions AttributeName=LockID,AttributeType=S --key-schema AttributeName=LockID,KeyType=HASH --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5
         continue-on-error: true
-        
+
+      - name: Validate S3 Bucket
+        run: aws s3 ls | grep -i "${{ inputs.AWS_BUCKET_NAME }}"
+        id: validate_bucket
+      
       - name: Create S3 Bucket
+        if: steps.validate_bucket.outputs['time'] == ''
         run: aws s3 mb s3://${{ inputs.AWS_BUCKET_NAME }}
         continue-on-error: true
