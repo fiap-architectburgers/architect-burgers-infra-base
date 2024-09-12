@@ -37,13 +37,12 @@ jobs:
 
 
       - name: Validate DynamoDB Table
-        run: aws dynamodb list-tables | grep -i "${{ inputs.AWS_TABLE_NAME }}"
+        run: aws dynamodb list-tables | grep -iq "${{ inputs.AWS_TABLE_NAME }}"
         id: validate_table
-
       
       - name: Create Dynamodb table
-      #  if: steps.describe_table.outputs.exit-code == 1
-        if: steps.validate_table.outputs['time'] == ''
+        if: steps.validate_table.outputs.exit-code == 1
+        #if: steps.validate_table.outputs['time'] == ''
         run: aws dynamodb create-table --table-name ${{ inputs.AWS_TABLE_NAME }} --attribute-definitions AttributeName=LockID,AttributeType=S --key-schema AttributeName=LockID,KeyType=HASH --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5
         continue-on-error: true
 
