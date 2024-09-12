@@ -3,7 +3,6 @@ name: Validate Terraform files
 on:
   workflow_call: 
   push:
-    branches: [ "github-alancarvalho-patch-2" ]
     #paths: ["terraform/**"]
   pull_request:
     branches: [ "main" ]
@@ -61,7 +60,6 @@ jobs:
             -backend-config="dynamodb_table=terraform-mongodb-lock" \
             && terraform validate 
 
-     
 
 
   validate-rds-postgres-database:
@@ -78,14 +76,6 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
-
-     # - name: Validate DynamoDB Table
-     #   run: aws dynamodb list-tables | grep -iq "terraform-postgres-lock"
-     #   id: validate_table
-
-      #- name: Validate S3 Bucket
-      #  run: aws s3 ls | grep -iq "s3-terraform-postgres"
-      #  id: validate_bucket
 
       - name: Validate S3 Bucket
         run: |
