@@ -26,10 +26,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
 
-      #- name: Validate DynamoDB Table
-      #  run: aws dynamodb list-tables | grep -iq "terraform-mongodb-lock"
-      #  id: validate_table
-
       #- name: Validate S3 Bucket
       #  run: aws s3 ls | grep -iq "s3-terraform-mongodb"
       #  id: validate_bucket
@@ -37,24 +33,19 @@ jobs:
       - name: Validate DynamoDB Table and Bucket
         run: |
           if aws dynamodb list-tables | grep -iq "terraform-mongodb-lock"; then
-          echo "TABLE1=Found" >> $GITHUB_OUTPUT          
+          echo "TABLE=Found" >> $GITHUB_OUTPUT          
           else
-           echo "TABLE1=Not Found" >> $GITHUB_OUTPUT
-          #cd terraform && terraform init
+           echo "TABLE=Not Found" >> $GITHUB_OUTPUT
           fi
-        id: validate_dyn_bucket
+        id: validate_table
       
       - name: Terraform Init - First Execution
-      #  if: steps.validate_table.outputs.exit-code == 1 || steps.validate_bucket.outputs.exit-code == 1
-        #if: steps.validate_dyn_bucket.outputs.exit-code == 0
-        #if: ${{ github.output.result_table }} == nao_existe
+        if: ${{ steps.validate_dyn_bucket.outputs.TABLE1 }} == Not Found
         run: |
-          echo ${{ steps.validate_dyn_bucket.outputs.TABLE1 }}
           cd terraform && terraform init
       
       - name: Terraform Init
-        #if: steps.validate_table.outputs.exit-code == 0
-        if: ${{ github.output.result_table }} != nao_existe
+        if: ${{ steps.validate_dyn_bucket.outputs.TABLE1 }} == Found
         run: |
           cd terraform/mongo && terraform init \
             -backend-config="bucket=s3-terraform-mongodb" \
