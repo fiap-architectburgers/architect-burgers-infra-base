@@ -8,7 +8,7 @@ on:
   push:
     #branches: [ "main" ]
     branches: [ "github-alancarvalho-patch-2" ]
-    #paths: ["terraform/**"]
+   # #paths: ["terraform/**"]
 #  pull_request:
 #    branches: [ "main" ]
 #    paths: ["terraform/**"]
@@ -47,8 +47,7 @@ jobs:
             -backend-config="dynamodb_table=terraform-mongodb-lock"
 
       - name: Terraform Apply 
-        working-directory: ./terraform/mongo
-        #run: terraform apply --auto-approve -var=MONGO_DB_ORG_ID=${{ secrets.MONGO_DB_ORG_ID }} -var=MONGO_DB_PUBLIC_KEY=${{ secrets.MONGO_DB_PUBLIC_KEY }} -var=MONGO_DB_PRIVATE_KEY=${{ secrets.MONGO_DB_PRIVATE_KEY }} -var=MONGO_DB_USER=${{ secrets.MONGO_DB_USER }} -var=MONGO_DB_PASSWORD=${{ secrets.MONGO_DB_PASSWORD }}
+        working-directory: ./terraform/mongo        
         run: terraform apply --auto-approve -var=MONGO_DB_ORG_ID=${{ secrets.MONGO_DB_ORG_ID }} -var=MONGO_DB_PUBLIC_KEY=${{ secrets.MONGO_DB_PUBLIC_KEY }} -var=MONGO_DB_PRIVATE_KEY=${{ secrets.MONGO_DB_PRIVATE_KEY }} -var=MONGO_DB_USER=${{ secrets.MONGO_DB_USER }} -var=MONGO_DB_PASSWORD=${{ secrets.MONGO_DB_PASSWORD }}
 
         
