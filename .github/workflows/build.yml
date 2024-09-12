@@ -42,7 +42,7 @@ jobs:
       - name: Terraform Init - First Execution
         if: steps.validate_table.outputs.TABLE1 == 0
         run: |
-          cd terraform && terraform init -backend=false
+          cd terraform && terraform init -backend=false && terraform validate 
       
       - name: Terraform Init
         if: steps.validate_table.outputs.TABLE1 == 1
