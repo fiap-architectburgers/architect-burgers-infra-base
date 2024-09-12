@@ -2,13 +2,10 @@ name: IaC Mongo DB
 
 on:
   workflow_call:
-  #workflow_run:
-  #  workflows: ["AWS Pre Requirements"]
-  
+
   push:
-    #branches: [ "main" ]
-    branches: [ "github-alancarvalho-patch-2" ]
-  #  paths: ["terraform/**"]
+    branches: [ "main" ]
+    paths: ["terraform/**"]
 ###  pull_request:
 #    branches: [ "main" ]
 #    paths: ["terraform/**"]
