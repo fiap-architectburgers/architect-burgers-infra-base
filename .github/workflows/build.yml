@@ -39,7 +39,7 @@ jobs:
           fi
         id: validate_table
       
-      - name: Terraform Init - First Execution
+      - name: Terraform Validation- First Execution
         if: steps.validate_table.outputs.TABLE1 == 0
         run: |
           cd terraform && terraform init -backend=false && terraform validate 
@@ -51,11 +51,10 @@ jobs:
             -backend-config="bucket=s3-terraform-mongodb" \
             -backend-config="key=${{ secrets.AWS_BUCKET_FILE }}" \
             -backend-config="region=us-east-1" \
-            -backend-config="dynamodb_table=terraform-mongodb-lock"
+            -backend-config="dynamodb_table=terraform-mongodb-lock" \
+            && terraform validate 
 
-      - name: Terraform Validate 
-        working-directory: ./terraform/mongo
-        run: terraform validate        
+     
 
 
   validate-rds-postgres-database:
