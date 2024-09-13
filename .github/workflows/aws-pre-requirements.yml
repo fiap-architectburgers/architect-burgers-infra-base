@@ -11,7 +11,7 @@ on:
         type: string
       workflow_dispatch:
   #push:
-  #  branches: [ "github-alancarvalho-patch-2" ]
+  ##  branches: [ "github-alancarvalho-patch-2" ]
    # paths: ["terraform/**"]
   #pull_request:
   #  branches: [ "main" ]
