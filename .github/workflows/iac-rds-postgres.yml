@@ -2,9 +2,9 @@ name: IaC RDS Postgres
 
 on:
   workflow_call: 
-  push:
-    branches: [ "main" ]
-    paths: ["terraform/**"]
+  #push:
+  #  branches: [ "main" ]
+  #  paths: ["terraform/**"]
   workflow_dispatch:
 
 jobs: 
