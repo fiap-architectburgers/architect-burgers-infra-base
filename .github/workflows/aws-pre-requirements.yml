@@ -9,7 +9,7 @@ on:
       AWS_TABLE_NAME:
         required: true
         type: string
-      workflow_dispatch:
+  workflow_dispatch:
 
 jobs:
   pre-reqs-terraform-aws:
