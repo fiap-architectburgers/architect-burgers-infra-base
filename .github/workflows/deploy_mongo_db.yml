@@ -12,7 +12,11 @@ jobs:
       TF_STATE_BUCKET_NAME: ${{vars.TF_STATE_MONGODB_BUCKET_NAME}}
       TF_STATE_BUCKET_PATH: ${{vars.TF_STATE_BUCKET_PATH}}
       TF_LOCK_TABLE_NAME: ${{vars.TF_LOCK_TABLE_NAME_MONGODB}}
-    secrets: inherit
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+      
+    #secrets: inherit
 
   terraform-postgres-apply:
     uses: ./.github/workflows/_run-terraform-command.yml
@@ -23,4 +27,8 @@ jobs:
       TF_STATE_BUCKET_NAME: ${{vars.TF_STATE_POSTGRES_BUCKET_NAME}}
       TF_STATE_BUCKET_PATH: ${{vars.TF_STATE_BUCKET_PATH}}
       TF_LOCK_TABLE_NAME: ${{vars.TF_LOCK_TABLE_NAME_POSTGRES}}
-    secrets: inherit
+
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+    #secrets: inherit
