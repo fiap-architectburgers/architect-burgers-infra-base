@@ -3,15 +3,17 @@ run-name: Terraform MongoDB
 on: push   # TODO: Em teste! Mudar condição para apenas na branch main! (PR aceito)
 
 jobs:
-  call-workflow-run_terraform_command:
-    uses: ./.github/workflows/_run-terraform-command.yml
-    secrets: inherit
+  #call-workflow-run_terraform_command:
+  #  uses: ./.github/workflows/_run-terraform-command.yml
+  #  secrets: inherit
 
   terraform-mongodb-apply:
-    needs: call-workflow-run_terraform_command
+    #needs: call-workflow-run_terraform_command
     runs-on: ubuntu-latest
+    
     steps:
       - name: Apply
+        uses: ./.github/workflows/_run-terraform-command.yml
         with:
           TERRAFORM_COMMAND: apply --auto-approve -var=MONGO_DB_ORG_ID=${{ secrets.MONGO_DB_ORG_ID }}
     
