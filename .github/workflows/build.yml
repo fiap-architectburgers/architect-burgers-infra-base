@@ -1,0 +1,111 @@
+name: Validate Terraform files
+
+on:
+  workflow_call: 
+  push:
+    paths: ["terraform/**"]
+  pull_request:
+    branches: [ "main" ]
+    paths: ["terraform/**"]
+  workflow_dispatch:
+
+jobs: 
+  validate-mongo-database:
+    name: "Validate terraform MongoDB database - Create "
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: "Configure AWS Credentials" 
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: us-east-1
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+
+      - name: Validate S3 Bucket
+        run: |
+          if aws s3 ls | grep -iq "s3-terraform-mongodb"; then
+          echo "BUCKET=1" >> $GITHUB_OUTPUT          
+          else
+           echo "BUCKET=0" >> $GITHUB_OUTPUT
+          fi
+        id: validate_bucket
+
+      - name: Validate DynamoDB Table
+        run: |
+          if aws dynamodb list-tables | grep -iq "terraform-mongodb-lock"; then
+          echo "TABLE=1" >> $GITHUB_OUTPUT          
+          else
+           echo "TABLE=0" >> $GITHUB_OUTPUT
+          fi
+        id: validate_table
+      
+      - name: Terraform Validation- First Execution
+        if: steps.validate_table.outputs.TABLE == 0 || steps.validate_bucket.outputs.BUCKET == 0
+        run: |
+          echo ${{ steps.validate_table.outputs.TABLE }}
+          cd terraform && terraform init -backend=false && terraform validate 
+      
+      - name: Terraform Init
+        if: steps.validate_table.outputs.TABLE == 1 || steps.validate_bucket.outputs.BUCKET == 1
+        run: |
+          echo ${{ steps.validate_table.outputs.TABLE }}
+          cd terraform/mongo && terraform init \
+            -backend-config="bucket=s3-terraform-mongodb" \
+            -backend-config="key=${{ secrets.AWS_BUCKET_FILE }}" \
+            -backend-config="region=us-east-1" \
+            -backend-config="dynamodb_table=terraform-mongodb-lock" \
+            && terraform validate 
+
+
+
+  validate-rds-postgres-database:
+    name: "Validate RDS Postgres database - Create"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: "Configure AWS Credentials" 
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: us-east-1
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+
+      - name: Validate S3 Bucket
+        run: |
+          if aws s3 ls | grep -iq "s3-terraform-postgres"; then
+          echo "BUCKET=1" >> $GITHUB_OUTPUT          
+          else
+           echo "BUCKET=0" >> $GITHUB_OUTPUT
+          fi
+        id: validate_bucket
+
+      - name: Validate DynamoDB Table
+        run: |
+          if aws dynamodb list-tables | grep -iq "terraform-postgres-lock"; then
+          echo "TABLE=1" >> $GITHUB_OUTPUT          
+          else
+           echo "TABLE=0" >> $GITHUB_OUTPUT
+          fi
+        id: validate_table
+
+      - name: Terraform Init - First Execution
+        if: steps.validate_table.outputs.TABLE == 0 || steps.validate_bucket.outputs.BUCKET == 0
+        run: |
+          cd terraform && terraform init -backend=false && terraform validate 
+      
+      - name: Terraform Init
+        if: steps.validate_table.outputs.TABLE == 1 || steps.validate_bucket.outputs.BUCKET == 1
+        run: |
+          cd terraform && terraform init \
+            -backend-config="bucket=terraform-postgres" \
+            -backend-config="key=${{ secrets.AWS_BUCKET_FILE }}" \
+            -backend-config="region=us-east-1" \
+            -backend-config="dynamodb_table=terraform-postgres-lock" \
+            && terraform validate 

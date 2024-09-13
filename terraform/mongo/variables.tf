@@ -20,7 +20,7 @@ variable "cluster_name" {
 }
 variable "cloud_provider" {
   type        = string
-  description = "The cloud provider to use, must be AWS, GCP or AZURE"
+  description = "The cloud provider to use, must be AWS, GCP or AZURE "
 }
 variable "region" {
   type        = string
