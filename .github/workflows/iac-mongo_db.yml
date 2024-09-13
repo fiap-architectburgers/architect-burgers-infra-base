@@ -10,7 +10,8 @@ on:
 
 jobs: 
   call-workflow-aws-pre-requirements:
-    uses: ./.github/workflows/aws-pre-requirements.yml
+    #uses: ./.github/workflows/aws-pre-requirements.yml
+    uses: fiap-architectburgers/architect-burgers-infra-base/.github/workflows/aws-pre-requirements.yml@main
     secrets: inherit
     with:
       AWS_BUCKET_NAME: "s3-terraform-mongodb"
