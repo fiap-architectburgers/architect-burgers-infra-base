@@ -6,7 +6,7 @@ on:
   push:
     branches: [ "main" ]
     paths: ["terraform/mongo**"]
-###  pull_request:
+####  pull_request:
 #    branches: [ "main" ]
 #    paths: ["terraform/**"]
   workflow_dispatch:
