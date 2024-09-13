@@ -13,8 +13,8 @@ jobs:
     uses: ./.github/workflows/aws-pre-requirements.yml
     secrets: inherit
     with:
-      AWS_BUCKET_NAME: s3-terraform-mongodb
-      AWS_TABLE_NAME: terraform-mongodb-lock
+      AWS_BUCKET_NAME: "s3-terraform-mongodb"
+      AWS_TABLE_NAME: "terraform-mongodb-lock"
    
   create-mongo-database:
     needs: call-workflow-aws-pre-requirements
