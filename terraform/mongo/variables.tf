@@ -64,7 +64,7 @@ variable "provider_name" {
   type        = string
 }
 variable "provider_region_name" {
-  description = "Atlas region provider name"
+  description = "Atlas region provider name "
   default     = "US_EAST_1"
   type        = string
 }
