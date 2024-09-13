@@ -12,7 +12,7 @@ jobs:
     uses: ./.github/workflows/aws-pre-requirements.yml
     secrets: inherit
     with:
-      AWS_BUCKET_NAME  : terraform-postgres
+      AWS_BUCKET_NAME: terraform-postgres
       AWS_TABLE_NAME: terraform-postgres-lock
      
   create-rds-postgres-database:
