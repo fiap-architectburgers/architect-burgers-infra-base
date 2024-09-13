@@ -3,9 +3,9 @@ name: IaC Mongo DB
 on:
   workflow_call:
 
-  push:
-    branches: [ "main" ]
-    paths: ["terraform/mongo**"]
+  #push:
+  #  branches: [ "main" ]
+  #  paths: ["terraform/mongo**"]
   workflow_dispatch:
 
 jobs: 
