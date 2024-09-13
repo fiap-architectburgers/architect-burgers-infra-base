@@ -4,7 +4,7 @@ variable "MONGO_DB_PUBLIC_KEY" {
 }
 variable "MONGO_DB_PRIVATE_KEY" {
   type        = string
-  description = "Private Programmatic API key to authenticate to Atlas"
+  description = "Private Programmatic API key to authenticate to Atlas "
 }
 variable "MONGO_DB_ORG_ID" {
   type        = string
