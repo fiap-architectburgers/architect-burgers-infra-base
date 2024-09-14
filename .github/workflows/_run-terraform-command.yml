@@ -50,7 +50,7 @@ jobs:
 
       - name: Create TF-Backend Dynamodb table
         run: |
-          chmod +x ./utils/create-s3-bucket.sh
+          chmod +x ./utils/create-dyndb-table.sh
           ./utils/create-dyndb-table.sh ${{ inputs.TF_LOCK_TABLE_NAME }}
 
       - name: Terraform Init
