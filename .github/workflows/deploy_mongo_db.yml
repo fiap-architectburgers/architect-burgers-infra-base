@@ -3,8 +3,6 @@ permissions: read-all
 run-name: Deploy Terraform MongoDB
 on: 
   workflow_call:
-    secrets:
-      access-token: ${{ secrets.MONGO_DB_ORG_ID }}
   push:   
   # TODO: Em teste! Mudar condição para apenas na branch main! (PR aceito)
       
@@ -13,7 +11,8 @@ jobs:
   terraform-apply:
     uses: ./.github/workflows/_run-terraform-command.yml
     with:
-      TERRAFORM_COMMAND: apply --auto-approve -var=MONGO_DB_ORG_ID=${{ secrets.MONGO_DB_ORG_ID }} -var=MONGO_DB_PUBLIC_KEY=${{ secrets.MONGO_DB_PUBLIC_KEY }} -var=MONGO_DB_PRIVATE_KEY=${{ secrets.MONGO_DB_PRIVATE_KEY }} -var=MONGO_DB_USER=${{ secrets.MONGO_DB_USER }} -var=MONGO_DB_PASSWORD=${{ secrets.MONGO_DB_PASSWORD }}
+      TERRAFORM_COMMAND: apply --auto-approve 
+      #-var=MONGO_DB_ORG_ID=${{ secrets.MONGO_DB_ORG_ID }} -var=MONGO_DB_PUBLIC_KEY=${{ secrets.MONGO_DB_PUBLIC_KEY }} -var=MONGO_DB_PRIVATE_KEY=${{ secrets.MONGO_DB_PRIVATE_KEY }} -var=MONGO_DB_USER=${{ secrets.MONGO_DB_USER }} -var=MONGO_DB_PASSWORD=${{ secrets.MONGO_DB_PASSWORD }}
     #                           --auto-approve -var=MONGO_DB_ORG_ID=${{ secrets.MONGO_DB_ORG_ID }} -var=MONGO_DB_PUBLIC_KEY=${{ secrets.MONGO_DB_PUBLIC_KEY }} -var=MONGO_DB_PRIVATE_KEY=${{ secrets.MONGO_DB_PRIVATE_KEY }} -var=MONGO_DB_USER=${{ secrets.MONGO_DB_USER }} -var=MONGO_DB_PASSWORD=${{ secrets.MONGO_DB_PASSWORD }}
 
       AWS_REGION: us-east-1
@@ -21,7 +20,10 @@ jobs:
       TF_STATE_BUCKET_PATH: ${{vars.TF_STATE_BUCKET_PATH}}
       TF_LOCK_TABLE_NAME: ${{vars.TF_LOCK_TABLE_NAME_MONGODB}}
       
-    secrets: inherit
+    #secrets: inherit
+    secrets:
+      TERRAFORM_SECRET: ${{ secrets.MONGO_DB_ORG_ID }}
+
 
    #       TERRAFORM_COMMAND: apply --auto-approve 
    #            -var=MONGO_DB_ORG_ID=${{ secrets.MONGO_DB_ORG_ID }}
