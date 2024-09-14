@@ -1,46 +1,26 @@
 name: Deploy MongoDB
-run-name: Terraform MongoDB
+run-name: Deploy Terraform MongoDB
 on: push   # TODO: Em teste! Mudar condição para apenas na branch main! (PR aceito)
 
 jobs:
-  ##call-workflow-run_terraform_command:
-  #  uses: ./.github/workflows/_run-terraform-command.yml
-  #  secrets: inherit
+  terraform-apply:
+    uses: ./.github/workflows/_run-terraform-command.yml
+    with:
+      TERRAFORM_COMMAND: apply --auto-approve
 
-  terraform-mongodb-apply:
-    #needs: call-workflow-run_terraform_command
-    runs-on: ubuntu-latest
-    
-    steps:
-      - name: Apply
-        uses: ./.github/workflows/_run-terraform-command.yml
-        with:
-          TERRAFORM_COMMAND: apply --auto-approve -var=MONGO_DB_ORG_ID=${{ secrets.MONGO_DB_ORG_ID }}
-    
-          AWS_REGION: us-east-1
-          TF_STATE_BUCKET_NAME: ${{vars.TF_STATE_MONGODB_BUCKET_NAME}}
-          TF_STATE_BUCKET_PATH: ${{vars.TF_STATE_BUCKET_PATH}}
-          TF_LOCK_TABLE_NAME: ${{vars.TF_LOCK_TABLE_NAME_MONGODB}}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+      AWS_REGION: us-east-1
+      TF_STATE_BUCKET_NAME: ${{vars.TF_STATE_MONGODB_BUCKET_NAME}}
+      TF_STATE_BUCKET_PATH: ${{vars.TF_STATE_BUCKET_PATH}}
+      TF_LOCK_TABLE_NAME: ${{vars.TF_LOCK_TABLE_NAME_MONGODB}}
       
-    #secrets: inherit
+    secrets: inherit
 
-  terraform-postgres-apply:
-    runs-on: ubuntu-latest    
-    steps:
-      - name: Apply
-        uses: ./.github/workflows/_run-terraform-command.yml
-        with:
-          TERRAFORM_COMMAND: apply --auto-approve 
-    
-          AWS_REGION: us-east-1
-          TF_STATE_BUCKET_NAME: ${{vars.TF_STATE_POSTGRES_BUCKET_NAME}}
-          TF_STATE_BUCKET_PATH: ${{vars.TF_STATE_BUCKET_PATH}}
-          TF_LOCK_TABLE_NAME: ${{vars.TF_LOCK_TABLE_NAME_POSTGRES}}
-    
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
-        #secrets: inherit
+   #       TERRAFORM_COMMAND: apply --auto-approve 
+   #            -var=MONGO_DB_ORG_ID=${{ secrets.MONGO_DB_ORG_ID }}
+   #             -var=MONGO_DB_PUBLIC_KEY=${{ secrets.MONGO_DB_PUBLIC_KEY }} 
+   #             -var=MONGO_DB_PRIVATE_KEY=${{ secrets.MONGO_DB_PRIVATE_KEY }} 
+   #             -var=MONGO_DB_USER=${{ secrets.MONGO_DB_USER }} 
+   #             -var=MONGO_DB_PASSWORD=${{ secrets.MONGO_DB_PASSWORD }}
+                
+      
+
