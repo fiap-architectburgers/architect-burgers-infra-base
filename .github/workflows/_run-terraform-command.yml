@@ -63,4 +63,4 @@ jobs:
 
       - name: Run terraform
         working-directory: ./terraform
-        run: "terraform ${{inputs.TERRAFORM_COMMAND}}"
+        run: "terraform ${{inputs.TERRAFORM_COMMAND}} ${{secrets.TERRAFORM_VARS}}" 
