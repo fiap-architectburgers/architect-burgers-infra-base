@@ -19,7 +19,9 @@ on:
       TF_LOCK_TABLE_NAME:
         required: true
         type: string
-
+    secrets:
+        TERRAFORM_SECRET:
+          required: false
 jobs:
   terraform-run:
     runs-on: ubuntu-latest
