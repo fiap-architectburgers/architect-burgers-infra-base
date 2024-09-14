@@ -1,4 +1,5 @@
 name: Deploy MongoDB
+permissions: read-all
 run-name: Deploy Terraform MongoDB
 on: push   # TODO: Em teste! Mudar condição para apenas na branch main! (PR aceito)
 
