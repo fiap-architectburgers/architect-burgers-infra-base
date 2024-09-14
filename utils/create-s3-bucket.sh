@@ -1,5 +1,5 @@
 #!/bin/bash
-
+echo "Starting the script to create the bucket"
 bucket_name="$1"
 
 if [ "$bucket_name" == "" ]
