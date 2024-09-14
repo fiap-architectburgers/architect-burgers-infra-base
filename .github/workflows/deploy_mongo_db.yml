@@ -3,6 +3,8 @@ permissions: read-all
 run-name: Deploy Terraform MongoDB
 on: 
   workflow_call:
+    secrets:
+      access-token: ${{ secrets.MONGO_DB_ORG_ID }}
   push:   
   # TODO: Em teste! Mudar condição para apenas na branch main! (PR aceito)
       
