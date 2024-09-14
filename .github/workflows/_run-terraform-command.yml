@@ -20,7 +20,7 @@ on:
         required: true
         type: string
     secrets:
-        TERRAFORM_SECRET:
+        TERRAFORM_VARS:
           required: false
         AWS_ACCESS_KEY_ID:
           required: true
