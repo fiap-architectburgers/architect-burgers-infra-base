@@ -19,6 +19,9 @@ on:
       TF_LOCK_TABLE_NAME:
         required: true
         type: string
+      TF_FILES_PATH:
+        required: true
+        type: string
     secrets:
         TERRAFORM_VARS:
           required: false
@@ -62,5 +65,5 @@ jobs:
             -backend-config="dynamodb_table=${{ inputs.TF_LOCK_TABLE_NAME }}"
 
       - name: Run terraform
-        working-directory: ./terraform
+        working-directory: ${{ inputs.TF_FILES_PATH }}
         run: "terraform ${{inputs.TERRAFORM_COMMAND}} ${{secrets.TERRAFORM_VARS}}" 
