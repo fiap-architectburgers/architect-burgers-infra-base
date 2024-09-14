@@ -1,8 +1,12 @@
 name: Deploy MongoDB
 permissions: read-all
 run-name: Deploy Terraform MongoDB
-on: push   # TODO: Em teste! Mudar condição para apenas na branch main! (PR aceito)
+on: 
   workflow_call:
+  push:   
+  # TODO: Em teste! Mudar condição para apenas na branch main! (PR aceito)
+      
+      
 jobs:
   terraform-apply:
     uses: ./.github/workflows/_run-terraform-command.yml
