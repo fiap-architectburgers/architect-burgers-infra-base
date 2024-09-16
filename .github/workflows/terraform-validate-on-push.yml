@@ -3,7 +3,7 @@ run-name: Validating after ${{github.actor}}'s changes
 on: push
 
 jobs:
-  terraform-mongodb-plan:
+  terraform-mongodb-validate:
     uses: ./.github/workflows/_run-terraform-command.yml
     with:
       TERRAFORM_COMMAND: validate
@@ -14,12 +14,11 @@ jobs:
       TF_FILES_PATH: ./terraform/mongo
 
     secrets:
-      #TERRAFORM_VARS: "-var=MONGO_DB_ORG_ID=${{ secrets.MONGO_DB_ORG_ID }} -var=MONGO_DB_PUBLIC_KEY=${{ secrets.MONGO_DB_PUBLIC_KEY }} -var=MONGO_DB_PRIVATE_KEY=${{ secrets.MONGO_DB_PRIVATE_KEY }} -var=MONGO_DB_USER=${{ secrets.MONGO_DB_USER }} -var=MONGO_DB_PASSWORD=${{ secrets.MONGO_DB_PASSWORD }}"
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
 
-  terraform-rds-postgres-plan:
+  terraform-rds-postgres-validate:
     uses: ./.github/workflows/_run-terraform-command.yml
     with:
       TERRAFORM_COMMAND: validate 
@@ -30,7 +29,6 @@ jobs:
       TF_FILES_PATH: ./terraform
 
     secrets:
-      #TERRAFORM_VARS: "-var=db_password=${{ secrets.POSTGRES_PASSWORD }}"
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
