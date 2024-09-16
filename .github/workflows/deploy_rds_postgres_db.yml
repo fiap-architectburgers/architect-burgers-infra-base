@@ -3,8 +3,9 @@ permissions: read-all
 run-name: Deploy Terraform RDS Postgres DB
 on: 
   workflow_call:
-  push:   
-  # TODO: Em teste! Mudar condição para apenas na branch main! (PR aceito)     
+  push:
+    branches: [ "main" ]
+    paths: ["terraform/**"]  
       
 jobs:
   terraform-rds-postgres-apply:
