@@ -1,0 +1,34 @@
+name: Terraform validate
+run-name: Validating after ${{github.actor}}'s changes
+on: push
+
+jobs:
+  terraform-mongodb-validate:
+    uses: ./.github/workflows/_run-terraform-command.yml
+    with:
+      TERRAFORM_COMMAND: validate
+      AWS_REGION: us-east-1
+      TF_STATE_BUCKET_NAME: ${{vars.TF_STATE_MONGODB_BUCKET_NAME}}
+      TF_STATE_BUCKET_PATH: ${{vars.TF_STATE_BUCKET_PATH}}
+      TF_LOCK_TABLE_NAME: ${{vars.TF_LOCK_TABLE_NAME_MONGODB}}
+      TF_FILES_PATH: ./terraform/mongo
+
+    secrets:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+
+  terraform-rds-postgres-validate:
+    uses: ./.github/workflows/_run-terraform-command.yml
+    with:
+      TERRAFORM_COMMAND: validate 
+      AWS_REGION: us-east-1
+      TF_STATE_BUCKET_NAME: ${{vars.TF_STATE_POSTGRES_BUCKET_NAME}}
+      TF_STATE_BUCKET_PATH: ${{vars.TF_STATE_BUCKET_PATH}}
+      TF_LOCK_TABLE_NAME: ${{vars.TF_LOCK_TABLE_NAME_POSTGRES}}
+      TF_FILES_PATH: ./terraform
+
+    secrets:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}

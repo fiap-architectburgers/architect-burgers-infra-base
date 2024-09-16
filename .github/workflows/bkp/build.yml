@@ -2,11 +2,11 @@ name: Validate Terraform files
 
 on:
   workflow_call: 
-  push:
-    paths: ["terraform/**"]
-  pull_request:
-    branches: [ "main" ]
-    paths: ["terraform/**"]
+ # push:
+ #   paths: ["terraform/**"]
+ # pull_request:
+ #   branches: [ "main" ]
+ #   paths: ["terraform/**"]
   workflow_dispatch:
 
 jobs: 

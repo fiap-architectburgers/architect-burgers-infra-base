@@ -1,10 +1,11 @@
-name: IaC RDS Postgres
+name: IaC Mongo DB
 
 on:
-  workflow_call: 
-  push:
-    branches: [ "main" ]
-    paths: ["terraform/**"]
+  workflow_call:
+
+  #push:
+  #  branches: [ "main" ]
+  #  paths: ["terraform/mongo**"]
   workflow_dispatch:
 
 jobs: 
@@ -13,12 +14,12 @@ jobs:
     uses: fiap-architectburgers/architect-burgers-infra-base/.github/workflows/aws-pre-requirements.yml@main
     secrets: inherit
     with:
-      AWS_BUCKET_NAME: "terraform-postgres"
-      AWS_TABLE_NAME: "terraform-postgres-lock"
-     
-  create-rds-postgres-database:
+      AWS_BUCKET_NAME: "s3-terraform-mongodb"
+      AWS_TABLE_NAME: "terraform-mongodb-lock"
+   
+  create-mongo-database:
     needs: call-workflow-aws-pre-requirements
-    name: "Create RDS Postgres database"
+    name: "Create MongoDB database"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -34,14 +35,14 @@ jobs:
       
       - name: Terraform Init
         run: |
-          cd terraform && terraform init \
-            -backend-config="bucket=s3-terraform-postgres" \
+          cd terraform/mongo && terraform init \
+            -backend-config="bucket=s3-terraform-mongodb" \
             -backend-config="key=${{ secrets.AWS_BUCKET_FILE }}" \
             -backend-config="region=us-east-1" \
-            -backend-config="dynamodb_table=terraform-postgres-lock"
+            -backend-config="dynamodb_table=terraform-mongodb-lock"
 
       - name: Terraform Apply 
-        working-directory: ./terraform
-        run: terraform apply --auto-approve -var=db_password=${{ secrets.POSTGRES_PASSWORD }}
+        working-directory: ./terraform/mongo        
+        run: terraform apply --auto-approve -var=MONGO_DB_ORG_ID=${{ secrets.MONGO_DB_ORG_ID }} -var=MONGO_DB_PUBLIC_KEY=${{ secrets.MONGO_DB_PUBLIC_KEY }} -var=MONGO_DB_PRIVATE_KEY=${{ secrets.MONGO_DB_PRIVATE_KEY }} -var=MONGO_DB_USER=${{ secrets.MONGO_DB_USER }} -var=MONGO_DB_PASSWORD=${{ secrets.MONGO_DB_PASSWORD }}
 
         
