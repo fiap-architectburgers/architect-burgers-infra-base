@@ -8,7 +8,7 @@ variable "MONGO_DB_PRIVATE_KEY" {
 }
 variable "MONGO_DB_ORG_ID" {
   type        = string
-  description = "MongoDB Organization ID"
+  description = "MongoDB Organization ID "
 }
 variable "project_name" {
   type        = string
